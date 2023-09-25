@@ -1,0 +1,136 @@
+# FDS
+
+## 学长笔记 
+[数据结构复习笔记](https://note.tonycrane.cc/cs/algorithm/ds/)
+[数据结构笔记](https://note.starlightxyy.cn/College%20Courses/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E5%86%AC%E7%AC%94%E8%AE%B0/FDS/)
+
+## 课程学习内容
+FDS 按专题授课，各专题之间联系不大，不存在前一节课不听后一节课就听不懂的情况
+
+课程难度适中，课程要求主要是掌握简单算法的算法流程（会手算具体样例、会写代码实现），对于一些相对复杂的算法（比如网络流、Tarjan 算法）以及复杂度和定理的证明点到为止，一般只在作业中要求，不会出现在考试中
+
+## 分数构成
+* 作业 10%：全部在 pta 上布置
+* quiz 10%：2 到 3 次，期中考和期末考前两三周小测概率较大，可能会线下要求手写代码
+* 期中考 15%
+* 期末考 40%
+* lab 25% 或 30%
+* bonus 4%：一般可以直接补在总分里，也有可能只能补平时分，视不同老师而定
+
+lab 分数 = 助教打分 50% + 互评 50%
+lab 有 normal 和 hard 两个可选分级，前者 25 分，后者有 30 分;选择 hard 的同学总分是 105 分，超过 100 的分数会被舍掉
+
+## Project Report 避坑指南
+
+### 项目评价过程
+1. 提交程序(1 week)
+
+2. 互评(2 days)
+3. 修改并提交给助教(2 days)
+4. 助教评分
+
+在互评中你的程序和报告会交给三位课友进行打分，而你也需要给三位同学打分。为了保证公平，你需要保证你的程序和报告不泄露个人信息。并且报告的评分标准非常繁杂，建议面向要求编写报告。详细的报告要求会在第一次互评时给出，但当你看到报告要求时报告的提交已经截止了。为了不被严格的互评人背刺，最好提前对互评要求有一定的概念，下面罗列了报告每一章节容易忽视的注意事项（并不全面，详细要求见老师给出的文档）
+1. 删除个人信息（老师会发一个 ppt 专门教怎么删除个人信息）
+
+2. Chapter 1 Introduction
+自己描述题目，不能照搬照抄 (-3)
+3. Chapter 2 Algorithm Specification
+    * 伪代码 + 自然语言描述
+    * 不要直接贴项目代码
+4. Chapter 3 Testing Result
+    * 每一组测试样例都要写 purpose (-3)
+    * 至少一组综合测试样例 (comprehensive test case)，数据规模的上下边界各一组，极限情况 (extreme case) 必须测试到，再加 n 组随机数据 (-4，一般不会要求非常严格 )
+    * 可以搞点图表来展示运行时间
+5. Chapter 4 Analysis and Comments
+
+* 分析复杂度需要写过程不能直接给出结果 (-4)
+例如循环的复杂度要这么写：The loop runs for N times and the complexity of each loop body is O(1), so the total time complexity is O(N).
+* 时间和空间都要写到
+6. 代码
+一定要多写注释，至少写到代码总长度的 30% 以上 (-50，某些老师如 cyll 管得比较严 )
+7. README
+怎么编译？怎么运行？怎么输入？期望的输出？最好能给一组样例输入输出
+
+## Chapter 2 Algorithm Analysis
+
+### Algorithm
+An algorithm is a finite set of instructions that accomplished a particular task.
+
+#### 1. Input 
+Zero of more
+
+#### 2. Output
+At least one
+#### 3. Definiteness
+Clear and unamniguous
+#### 4. Finiteness
+For all cases,the algorithm terminates after finite number of steps
+#### 5. Effectiveness
+
+
+### What to Analyze
+
+#### Machine & compiler-dependent run times
+
+#### Time & space complexities: machine & compiler-independent
+
+$T_{avg}(N)$ 
+
+$T_{worst}(N)$
+
+### Asymptotic Notation
+
+* $T(N)=O(f(N))$
+there are positive constants c and $n_0$ such that $T(N)<=c \cdot f(N)$ for all N>=$n_0$
+
+* $T(N)=\Omega(g(N))$
+there are positive constants c and $n_0$ such that $T(N)>=c \cdot g(N)$ for all N>=$n_0$
+
+* $T(N)=\Theta(g(N))$
+if and only if $T(N)=O(h(N))$ and $T(N)=\Omega(h(N))$
+
+* $T(N)=o(p(N))$
+if $T(N)=O(p(N))$ and $T(N) \neq \Theta(p(N))$
+
+## homework 
+
+### week1
+
+*  Balloon Popping
+
+```c
+    int main(){
+    int n,len,max=0,min;
+    scanf("%d %d",&n,&len);
+    int a[n];
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+    }
+    for(int i=0;i+max<n;i++){
+        while(a[i]+len>=a[i+max]&&i+max<n){
+            min=a[i+max]-len;
+            max++;
+        }
+    }
+    printf("%d %d",min,max);
+}
+
+```
+```c
+int main(){
+    int n,len,max=0,k=0,min;
+    scanf("%d %d",&n,&len);
+    int a[n];
+    for(int i=n-1;i>=0;i--){
+        scanf("%d",&a[i]);
+    }
+    for(int i=0;i<n;i++){
+        for(;a[i]-len<=a[k]&&k<n;++k);
+        if(k-i>=max){
+            max=k-i;
+            min=a[i]-len;
+        }
+    }
+    printf("%d %d",min,max);
+}
+```
